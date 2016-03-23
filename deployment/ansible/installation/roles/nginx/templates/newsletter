@@ -5,8 +5,8 @@ server {
     client_header_buffer_size 512k;
     large_client_header_buffers 4 512k;
 
-    access_log            /var/log/nginx/mediacenter.access.log;
-    error_log             /var/log/nginx/mediacenter.error.log;
+    access_log            /var/log/nginx/newsletter.access.log;
+    error_log             /var/log/nginx/newsletter.error.log;
 
     gzip on;
     gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
