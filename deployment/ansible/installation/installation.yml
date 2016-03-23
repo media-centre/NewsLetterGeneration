@@ -1,0 +1,12 @@
+- hosts: web
+  become: True
+  become_method: sudo
+  roles:
+    - PreInstallationTasks
+    - gotansible.nodejs
+    - grunt.git.imagemagick
+    - pm2
+    - nginx
+    - nginx-hardening
+    - ansible-os-hardening
+    - ansible-ssh-hardening

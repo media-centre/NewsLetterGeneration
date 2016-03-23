@@ -1,0 +1,27 @@
+---
+- name: run apt-get upgrade
+  apt: update_cache=yes
+
+- name: ensure ansible is installed
+  apt: pkg=ansible state=installed
+
+- name: copy the os limits
+  copy: src=./files/limits.conf dest=/etc/security/limits.conf owner=root group=root mode=0644
+
+- name: clear all old iptables
+  command: iptables -F
+
+- name: Accept internal packets
+  iptables: chain=INPUT protocol=tcp in_interface=lo destination_port=5000 jump=ACCEPT
+
+- name: drop external packets
+  iptables: chain=INPUT protocol=tcp  destination_port=5000 jump=DROP
+
+- name: save iptables
+  shell: iptables-save > /etc/firewall.conf
+
+- name: add bootup script
+  shell: echo  '#!/bin/sh\niptables-restore < /etc/firewall.conf' > /etc/network/if-up.d/iptables
+
+- name: add executable permissions
+  file: path=/etc/network/if-up.d/iptables state=file mode=0755

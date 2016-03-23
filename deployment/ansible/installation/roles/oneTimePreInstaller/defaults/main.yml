@@ -1,0 +1,3 @@
+---
+# defaults file for oneTimePreInstaller
+sudo_username: donotlogin

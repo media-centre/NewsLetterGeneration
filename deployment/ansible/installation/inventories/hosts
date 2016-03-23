@@ -1,0 +1,4 @@
+[web]
+nltest.makenews.in
+[web:vars]
+nginx_domain=nltest.makenews.in

@@ -1,0 +1,8 @@
+- name: install Grunt npm module
+  npm: name=grunt-cli global=yes
+
+- name: Install Git
+  apt: pkg=git
+
+- name: Install ImageMagick
+  apt: pkg=imagemagick

@@ -1,0 +1,26 @@
+server {
+    listen 80 default_server;
+    server_name {{nginx_domain}};
+
+    client_header_buffer_size 512k;
+    large_client_header_buffers 4 512k;
+
+    access_log            /var/log/nginx/mediacenter.access.log;
+    error_log             /var/log/nginx/mediacenter.error.log;
+
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    location / {
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      # Fix the “It appears that your reverse proxy set up is broken" error.
+      proxy_pass          http://localhost:9006;
+      proxy_read_timeout  90;
+
+      proxy_redirect      http://localhost:9006 http://{{nginx_domain}};
+    }
+  }

@@ -1,0 +1,22 @@
+---
+
+- name: update apt
+  command: apt-get update
+
+- name: install nginx
+  action: apt name=nginx
+
+- name: delete default in sites-available
+  action: file path=/etc/nginx/sites-enabled/default state=absent
+
+- name: copy newsletter to sites-available
+  template: src=newsletter dest=/etc/nginx/sites-available/newsletter mode=0644
+
+- name: link newsletter in sites-enabled
+  file: src=/etc/nginx/sites-available/newsletter dest=/etc/nginx/sites-enabled/newsletter state=link
+  notify:
+    - restart nginx
+
+
+
+
